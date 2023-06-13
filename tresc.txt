@@ -7,9 +7,8 @@ Napisz serwis (tylko backend) dla strony do obsługi konferencji IT. Założenia
 	- trzecia rozpoczyna się o 14:00 i kończy o 15:45
 4.	W ramach konferencji obsługiwane są 3 różne ścieżki tematyczne prowadzone równolegle. Jeśli użytkownik zapisze się w danej ścieżce na daną godzinę, to nie może już uczęszczać w tym okresie w innej ścieżce, natomiast o innej godzinie najbardziej może wybrać inną ścieżkę.
 5.	Każda prelekcja może pomieścić maksymalnie 5 słuchaczy.
-git diff origin/master..HEAD
 Portal powinien obsługiwać następujące scenariusze:
-1. Użytkownik może obejrzeć plan konferencji.
+1. Użytkownik może obejrzeć plan konferencji. +
 2. Użytkownik po podaniu swojego loginu może obejrzeć prelekcje na które się zapisał.
 3. Jeżeli prelekcja ma jeszcze wolne miejsca, użytkownik ma możliwość dokonania rezerwacji. Podczas dokonywania rezerwacji powinien podać swój login oraz adres e-mail.
 4. Jeżeli w systemie istnieje już użytkownik z danym loginem, ale z innym adresem e-mail, system powinien zaprezentować komunikat „Podany login jest już zajęty”.

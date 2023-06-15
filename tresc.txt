@@ -10,7 +10,7 @@ Napisz serwis (tylko backend) dla strony do obsługi konferencji IT. Założenia
 Portal powinien obsługiwać następujące scenariusze:
 1. Użytkownik może obejrzeć plan konferencji. +
 2. Użytkownik po podaniu swojego loginu może obejrzeć prelekcje na które się zapisał.
-3. Jeżeli prelekcja ma jeszcze wolne miejsca, użytkownik ma możliwość dokonania rezerwacji. Podczas dokonywania rezerwacji powinien podać swój login oraz adres e-mail.
+3. Jeżeli prelekcja ma jeszcze wolne miejsca, użytkownik ma możliwość dokonania rezerwacji. Podczas dokonywania rezerwacji powinien podać swój login oraz adres e-mail. +
 4. Jeżeli w systemie istnieje już użytkownik z danym loginem, ale z innym adresem e-mail, system powinien zaprezentować komunikat „Podany login jest już zajęty”. +
 5. Poprawne dokonanie rezerwacji skutkuje wysłaniem powiadomienia użytkownikowi na podany przez niego adres (wysyłka wiadomości - patrz wskazówki).
 6. Użytkownik może anulować rezerwację.

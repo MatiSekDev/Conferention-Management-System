@@ -3,8 +3,6 @@ package com.sii.conferention.management.system.configurations;
 import java.util.Map;
 
 public final class UtilsConfiguration {
-    public static final String SITE_URL = "http://127.0.0.1:8080";
-    public static final String API_VERSION = "/v0";
     public static final String ADMIN_USERNAME = "admin";
     public static final String ADMIN_EMAIL = "admin@admin.com";
     public static final String ORGANIZER_USERNAME = "organizer";
@@ -25,7 +23,8 @@ public final class UtilsConfiguration {
 
     public static final String LECTURE_JOINED_SUCCESS_MESSAGE = "You have joined the lecture";
 
-    public static final String LECTURE_JOINED_FAILURE_MESSAGE = "You could not have joined the lecture right now, please try again later";
+    public static final String EMAIL_NOTIFICATION_MESSAGE = "You have joined the lecture!";
+    public static final String EMAIL_NOTIFICATION_FILE_NAME = "./conferention.management.system/powiadomienia";
 
     public static final String JSON_PARSING_EXCEPTION_MESSAGE_ENGLISH = "JSON processing error, please try again later!";
     public static final int MAX_NO_PARTICIPANT_CASE_NORMAL = 5;

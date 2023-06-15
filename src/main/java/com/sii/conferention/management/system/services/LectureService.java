@@ -31,7 +31,8 @@ public class LectureService {
     private UserService userService;
     @Autowired
     private ParticipantRepository participantRepository;
-
+    @Autowired
+    private LoggingService loggingService;
     @Autowired
     private ParticipantService participantService;
 
@@ -64,6 +65,7 @@ public class LectureService {
         if (participantId.isEmpty()) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(UtilsConfiguration.PARTICIPANT_ADD_FAILURE_MESSAGE);
         }
+        loggingService.writeToEmailFileLog(loggingService.parseToMessage(userData.getEmail(), UtilsConfiguration.EMAIL_NOTIFICATION_MESSAGE));
         return ResponseEntity.ok(UtilsConfiguration.LECTURE_JOINED_SUCCESS_MESSAGE);
     }
 

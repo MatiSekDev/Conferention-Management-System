@@ -17,7 +17,7 @@ import java.util.Set;
 public class LectureEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Temporal(TemporalType.TIME)
     @Column(nullable = false)

@@ -12,6 +12,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ConferencePlanDto {
+    private long conferenceidentifier;
     private int currentParticipantsNumber;
     private int maxNumberOfParticipants;
     private Date endTime;

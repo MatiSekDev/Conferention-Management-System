@@ -3,6 +3,7 @@ package com.sii.conferention.management.system.repositories;
 import com.sii.conferention.management.system.entities.LectureEntity;
 import com.sii.conferention.management.system.entities.ParticipantEntity;
 import com.sii.conferention.management.system.entities.RoleEntity;
+import com.sii.conferention.management.system.entities.UserEntity;
 import com.sii.conferention.management.system.enums.RoleEnum;
 import jakarta.persistence.Id;
 import org.hibernate.mapping.Set;
@@ -21,4 +22,6 @@ public interface ParticipantRepository extends JpaRepository<ParticipantEntity, 
 
     @Query("SELECT participant.lecture.id FROM ParticipantEntity participant WHERE participant.user.id = :userId")
     List<Long> findLecturesIdsUserIsAssignedTo(@Param("userId") long userId);
+
+    Optional<ParticipantEntity> findByLectureAndUser(@Param("lecture") LectureEntity lecture, @Param("user") UserEntity user);
 }

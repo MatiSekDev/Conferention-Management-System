@@ -25,7 +25,8 @@ public final class UtilsConfiguration {
 
     public static final String EMAIL_NOTIFICATION_MESSAGE = "You have joined the lecture!";
     public static final String EMAIL_NOTIFICATION_FILE_NAME = "./conferention.management.system/powiadomienia";
-
+    public static final String PARTICiPANT_LECTURE_NOT_QUIT_MESSAGE = "User could not have successfully quit the lecture";
+    public static final String PARTICiPANT_LECTURE_QUIT_MESSAGE = "User successfully quit the lecture";
     public static final String JSON_PARSING_EXCEPTION_MESSAGE_ENGLISH = "JSON processing error, please try again later!";
     public static final int MAX_NO_PARTICIPANT_CASE_NORMAL = 5;
     public static final int LECTURE_FIRST_START_HOUR = 10;

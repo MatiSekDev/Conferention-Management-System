@@ -26,6 +26,11 @@ public class UserController {
         return userService.registerNewUser(newUserData);
     }
 
+    @PostMapping("/lectures/{lectureId}/cancel")
+    public ResponseEntity<String> cancelChosenReservation(@RequestBody UserDataDto userDataDto, @PathVariable Long lectureId){
+        return userService.cancelUserPartakeInLecture(userDataDto, lectureId);
+    }
+
     @GetMapping("/lectures/joined")
     public ResponseEntity<String> showJoinedLectures(@RequestBody UserDataDto userLogin) {
         return lectureService.showJoinedLectures(userLogin.getUsername());

@@ -27,6 +27,10 @@ public class UserService {
         return userRepository.findByUsernameAndEmail(userDataDto.getUsername(), userDataDto.getEmail());
     }
 
+    public Optional<UserEntity> getUserByUserLogin(String username) {
+        return userRepository.findByUsername(username);
+    }
+
     public ResponseEntity<String> registerNewUser(UserDataDto newUserData) {
         if (isUserLoginTaken(newUserData)) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(UtilsConfiguration.USER_LOGIN_ALREADY_TAKEN);

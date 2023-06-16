@@ -5,10 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sii.conferention.management.system.configurations.UtilsConfiguration;
 import com.sii.conferention.management.system.dtos.ConferencePlanDto;
 import com.sii.conferention.management.system.dtos.UserDataDto;
+import com.sii.conferention.management.system.dtos.UserLecturesDto;
 import com.sii.conferention.management.system.entities.LectureEntity;
-import com.sii.conferention.management.system.entities.ParticipantEntity;
 import com.sii.conferention.management.system.entities.UserEntity;
-import com.sii.conferention.management.system.enums.RoleEnum;
 import com.sii.conferention.management.system.repositories.LectureRepository;
 import com.sii.conferention.management.system.repositories.ParticipantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +18,6 @@ import org.springframework.stereotype.Service;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Stream;
 
 @Service
 public class LectureService {
@@ -36,6 +33,26 @@ public class LectureService {
     @Autowired
     private ParticipantService participantService;
 
+    public ResponseEntity<String> showJoinedLectures(String userLogin) {
+        Optional<UserEntity> existingUser = userService.getUserByUserLogin(userLogin);
+        if (existingUser.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(UtilsConfiguration.USER_DOES_NOT_EXIST);
+        }
+
+        List<Long> userLecturesIds = participantRepository.findLecturesIdsUserIsAssignedTo(existingUser.get().getId());
+        List<LectureEntity> userLectures = lectureRepository.findLecturesByLecturesId(userLecturesIds);
+
+        try {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    new ObjectMapper().writeValueAsString(
+                            UserLecturesDto.getListOfUserLecturesDtosFromListOdLectureEntities(userLectures)
+                    )
+            );
+        } catch (JsonProcessingException jpe) {
+            jpe.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(UtilsConfiguration.JSON_PARSING_EXCEPTION_MESSAGE_ENGLISH);
+        }
+    }
     public ResponseEntity<String> assignUserToLectureByUserDataAndLectureId(UserDataDto userData, Long lectureId) {
         Optional<UserEntity> existingUser = userService.getUserByUserData(userData);
         if (existingUser.isEmpty()) {

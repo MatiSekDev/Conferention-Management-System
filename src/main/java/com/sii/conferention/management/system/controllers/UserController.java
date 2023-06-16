@@ -3,6 +3,7 @@ package com.sii.conferention.management.system.controllers;
 import com.sii.conferention.management.system.configurations.UtilsConfiguration;
 import com.sii.conferention.management.system.dtos.UserDataDto;
 import com.sii.conferention.management.system.enums.RoleEnum;
+import com.sii.conferention.management.system.services.LectureService;
 import com.sii.conferention.management.system.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,12 +15,19 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private LectureService lectureService;
 
     @PostMapping("/new")
     public ResponseEntity<String> registerNewUser(@RequestBody UserDataDto newUserData) {
         return userService.registerNewUser(newUserData);
+    }
+
+    @GetMapping("/lectures/joined")
+    public ResponseEntity<String> showJoinedLectures(@RequestBody UserDataDto userLogin) {
+        return lectureService.showJoinedLectures(userLogin.getUsername());
     }
 }

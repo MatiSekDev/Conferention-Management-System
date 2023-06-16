@@ -1,7 +1,10 @@
 package com.sii.conferention.management.system.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sii.conferention.management.system.configurations.UtilsConfiguration;
 import com.sii.conferention.management.system.dtos.UserDataDto;
+import com.sii.conferention.management.system.dtos.UserLecturesDto;
 import com.sii.conferention.management.system.entities.LectureEntity;
 import com.sii.conferention.management.system.entities.RoleEntity;
 import com.sii.conferention.management.system.entities.UserEntity;
@@ -14,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -32,6 +36,28 @@ public class UserService {
 
     public Optional<UserEntity> getUserByUserData(UserDataDto userDataDto) {
         return userRepository.findByUsernameAndEmail(userDataDto.getUsername(), userDataDto.getEmail());
+    }
+
+    public ResponseEntity<String> getAllUserDataForAdmin(UserDataDto adminUserData) {
+        Optional<UserEntity> existingUser = getUserByUserData(adminUserData);
+        if (existingUser.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(UtilsConfiguration.USER_DOES_NOT_EXIST);
+        }
+        if (existingUser.get().getRoles().stream().noneMatch(role -> role.getName().equals(RoleEnum.ADMIN))) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(UtilsConfiguration.USER_IS_NOT_ADMIN);
+        }
+
+        List<UserDataDto> test = UserDataDto.getListOfUsersLimitedDataFromListOfUserEntities(userRepository.findAll());
+        try {
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(
+                    new ObjectMapper().writeValueAsString(
+                            test
+                    )
+            );
+        } catch (JsonProcessingException jpe) {
+            jpe.printStackTrace();
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(UtilsConfiguration.JSON_PARSING_EXCEPTION_MESSAGE_ENGLISH);
+        }
     }
 
     public Optional<UserEntity> getUserByUserLogin(String username) {

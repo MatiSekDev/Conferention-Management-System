@@ -1,8 +1,6 @@
 package com.sii.conferention.management.system.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.sii.conferention.management.system.entities.LectureEntity;
 import com.sii.conferention.management.system.entities.UserEntity;
 import lombok.*;
 
@@ -19,7 +17,7 @@ public class UserDataDto {
     private String email;
 
     @JsonIgnore
-    public UserEntity getUserEntity() {
+    public UserEntity getNewUserEntity() {
         return UserEntity.builder()
                          .email(this.email)
                          .username(this.username)

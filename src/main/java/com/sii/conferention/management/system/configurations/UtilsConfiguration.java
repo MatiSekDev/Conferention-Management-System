@@ -7,7 +7,7 @@ public final class UtilsConfiguration {
     public static final String ADMIN_EMAIL = "admin@admin.com";
     public static final String ORGANIZER_USERNAME = "organizer";
     public static final String ORGANIZER_EMAIL = "organizer@organizer.com";
-
+    public static final String USER_EMAIL_CHANGED_SUCCESS_MESSAGE = "Email was updated!";
     public static final String USER_ADD_FAILURE_MESSAGE = "Failed to save user";
     public static final String PARTICIPANT_ADD_FAILURE_ALREADY_JOINED_MESSAGE = "Failed to join lecture, you have already joined it";
     public static final String PARTICIPANT_ADD_FAILURE_MESSAGE = "Failed to join lecture";

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sii.conferention.management.system.configurations.UtilsConfiguration;
 import com.sii.conferention.management.system.dtos.UserDataDto;
-import com.sii.conferention.management.system.dtos.UserLecturesDto;
+import com.sii.conferention.management.system.dtos.UserUpdateDataDto;
 import com.sii.conferention.management.system.entities.LectureEntity;
 import com.sii.conferention.management.system.entities.RoleEntity;
 import com.sii.conferention.management.system.entities.UserEntity;
@@ -36,6 +36,16 @@ public class UserService {
 
     public Optional<UserEntity> getUserByUserData(UserDataDto userDataDto) {
         return userRepository.findByUsernameAndEmail(userDataDto.getUsername(), userDataDto.getEmail());
+    }
+
+    public ResponseEntity<String> updateUserEmail(UserUpdateDataDto userUpdateDataDto) {
+        Optional<UserEntity> existingUser = getUserByUserData(userUpdateDataDto.getUserDataDto());
+        if (existingUser.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(UtilsConfiguration.USER_DOES_NOT_EXIST);
+        }
+        existingUser.get().setEmail(userUpdateDataDto.getNewEmail());
+        userRepository.save(existingUser.get());
+        return ResponseEntity.status(HttpStatus.OK).body(UtilsConfiguration.USER_EMAIL_CHANGED_SUCCESS_MESSAGE);
     }
 
     public ResponseEntity<String> getAllUserDataForAdmin(UserDataDto adminUserData) {
@@ -88,7 +98,7 @@ public class UserService {
         }
 
         Optional<Long> userId = Optional.ofNullable(
-                saveUser(newUserData.getUserEntity(), RoleEnum.USER).getId()
+                saveUser(newUserData.getNewUserEntity(), RoleEnum.USER).getId()
         );
 
         if (userId.isEmpty()) {

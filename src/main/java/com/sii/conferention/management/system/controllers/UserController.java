@@ -2,6 +2,7 @@ package com.sii.conferention.management.system.controllers;
 
 import com.sii.conferention.management.system.configurations.UtilsConfiguration;
 import com.sii.conferention.management.system.dtos.UserDataDto;
+import com.sii.conferention.management.system.dtos.UserUpdateDataDto;
 import com.sii.conferention.management.system.enums.RoleEnum;
 import com.sii.conferention.management.system.services.LectureService;
 import com.sii.conferention.management.system.services.UserService;
@@ -29,6 +30,11 @@ public class UserController {
     @GetMapping("/admin/get/all")
     public ResponseEntity<String> getAllUserDataForAdmin(@RequestBody UserDataDto adminUserData) {
         return userService.getAllUserDataForAdmin(adminUserData);
+    }
+
+    @PutMapping("/old/update")
+    public ResponseEntity<String> updateUserEmail(@RequestBody UserUpdateDataDto userDataDto) {
+        return userService.updateUserEmail(userDataDto);
     }
 
     @PostMapping("/lectures/{lectureId}/cancel")

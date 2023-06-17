@@ -22,7 +22,7 @@ public final class UtilsConfiguration {
     public static final String LECTURE_DOES_NOT_EXIST = "Lecture does not exist";
 
     public static final String LECTURE_JOINED_SUCCESS_MESSAGE = "You have joined the lecture";
-
+    public static final String USER_IS_NOT_ADMIN = "Your level of permissions is not enough for that!";
     public static final String EMAIL_NOTIFICATION_MESSAGE = "You have joined the lecture!";
     public static final String EMAIL_NOTIFICATION_FILE_NAME = "./conferention.management.system/powiadomienia";
     public static final String PARTICiPANT_LECTURE_NOT_QUIT_MESSAGE = "User could not have successfully quit the lecture";

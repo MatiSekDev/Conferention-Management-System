@@ -43,14 +43,14 @@ public class LectureService {
         List<LectureEntity> userLectures = lectureRepository.findLecturesByLecturesId(userLecturesIds);
 
         try {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(
                     new ObjectMapper().writeValueAsString(
                             UserLecturesDto.getListOfUserLecturesDtosFromListOdLectureEntities(userLectures)
                     )
             );
         } catch (JsonProcessingException jpe) {
             jpe.printStackTrace();
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(UtilsConfiguration.JSON_PARSING_EXCEPTION_MESSAGE_ENGLISH);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(UtilsConfiguration.JSON_PARSING_EXCEPTION_MESSAGE_ENGLISH);
         }
     }
     public ResponseEntity<String> assignUserToLectureByUserDataAndLectureId(UserDataDto userData, Long lectureId) {

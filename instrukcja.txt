@@ -1,0 +1,77 @@
+
+Wszystkie podpunkty z pliku "tresc.txt" zostały wykonane, poniżej instrukcja do usługi rest:
+
+dodanie użytkownika:
+POST na url: http://127.0.0.1:8080/user/new
+z ciałem:
+{
+"username":"mati",
+"email":"mati@email.com"
+}
+
+aktualizacja emaila użytkownika:
+PUT na url: http://127.0.0.1:8080/user/old/update
+z ciałem:
+{
+"username":"mati",
+"email":"mati@email.com",
+"newEmail":"nowy@email.com"
+}
+
+pobranie danych wszystkich użytkowników (username i email) przez admina:
+GET na url: http://127.0.0.1:8080/user/admin/get/all
+z ciałem:
+{
+"username":"admin",
+"email":"admin@admin.com",
+}
+
+pobranie zestawienia danych przez organizatora (2 różne zestawienia, 2 przykłady):
+GET na url: http://127.0.0.1:8080/user/organiser/data
+//przykład 1
+z ciałem (zestawienie z podpunktu "zestawienie ścieżek tematycznych wg zainteresowania (procentowy udział)"):
+{
+"userDataDto": {
+"username":"organizer",
+"email":"organizer@organizer.com"
+},
+"dataRequestType":"BY_TOPIC_TYPE"
+}
+//przykład 2
+z ciałem (zestawienie z podpunktu "zestawienie wykładów wg zainteresowania (procentowy udział uczestników w danym wykładzie)"):
+{
+"userDataDto": {
+"username":"organizer",
+"email":"organizer@organizer.com"
+},
+"dataRequestType":"BY_FULLNESS_PERCENTAGE"
+}
+
+pobranie danych konferencji:
+GET na url: http://127.0.0.1:8080/conference/plan
+z ciałem:
+{
+}
+
+anulowanie bycia uczestnikiem wykładu o id 2 jako użytkownik admin (wcześniej trzeba się jako ten sam użytkownik na ten wykłąd zapisać):
+POST na url: http://127.0.0.1:8080/conference/lectures/2/cancel
+z ciałem:
+{
+"username":"admin",
+"email":"admin@admin.com",
+}
+
+pobranie danych odnośnie wykładów na które dany użytkownik się zapisał:
+GET na url: http://127.0.0.1:8080/conference/lectures/joined
+z ciałem:
+{
+"username":"admin"
+}
+
+zapisanie sie na wykład o id 2 jako użytkownik admin:
+POST na url: http://127.0.0.1:8080/conference/lectures/join/2
+z ciałem:
+{
+"username":"admin",
+"email":"admin@admin.com",
+}

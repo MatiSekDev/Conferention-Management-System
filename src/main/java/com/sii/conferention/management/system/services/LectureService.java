@@ -3,11 +3,12 @@ package com.sii.conferention.management.system.services;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sii.conferention.management.system.configurations.UtilsConfiguration;
-import com.sii.conferention.management.system.dtos.ConferencePlanDto;
 import com.sii.conferention.management.system.dtos.UserDataDto;
 import com.sii.conferention.management.system.dtos.UserLecturesDto;
 import com.sii.conferention.management.system.entities.LectureEntity;
 import com.sii.conferention.management.system.entities.UserEntity;
+import com.sii.conferention.management.system.enums.OrganiserDataRequestTypeEnum;
+import com.sii.conferention.management.system.enums.RoleEnum;
 import com.sii.conferention.management.system.repositories.LectureRepository;
 import com.sii.conferention.management.system.repositories.ParticipantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +16,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class LectureService {
 
+    @Autowired
+    private DtosJsonResponserService dtosJsonResponserService;
     @Autowired
     private LectureRepository lectureRepository;
     @Autowired
@@ -86,33 +88,7 @@ public class LectureService {
         return ResponseEntity.ok(UtilsConfiguration.LECTURE_JOINED_SUCCESS_MESSAGE);
     }
 
-    public String getConferencePlan() {
-        LinkedList<ConferencePlanDto> conferencePlan = new LinkedList<>();
-        lectureRepository.findAll().forEach(
-                lecture -> {
-                    conferencePlan.add(
-                            ConferencePlanDto.builder()
-                                    .conferenceidentifier(lecture.getId())
-                                    .maxNumberOfParticipants(lecture.getMaxNumberOfParticipants())
-                                    .currentParticipantsNumber(
-                                            participantRepository.countParticipantsByLecture(lecture.getId())
-                                    )
-                                    .endTime(lecture.getEndTime())
-                                    .startTime(lecture.getStartTime())
-                                    .lectureTopicType(lecture.getTopicType())
-                                    .build()
-                    );
 
-                }
-        );
-
-        try {
-            return new ObjectMapper().writeValueAsString(conferencePlan);
-        } catch (JsonProcessingException jpe) {
-            jpe.printStackTrace();
-            return UtilsConfiguration.JSON_PARSING_EXCEPTION_MESSAGE_ENGLISH;
-        }
-    }
 
     private boolean isTimeOfLectureInConflictForUser(LectureEntity lectureAlreadyJoined, LectureEntity lectureToJoin) {
         if (lectureAlreadyJoined.getStartTime().toString().equals(lectureToJoin.getStartTime().toString()) &&
@@ -122,4 +98,24 @@ public class LectureService {
         return false;
     }
 
+    public ResponseEntity<String> getStatisticDataForOrganiser(UserDataDto userDataDto, OrganiserDataRequestTypeEnum dataRequestType) {
+        Optional<UserEntity> existingUser = userService.getUserByUserData(userDataDto);
+        if (existingUser.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(UtilsConfiguration.USER_DOES_NOT_EXIST);
+        }
+        if (existingUser.get().getRoles().stream().noneMatch(role -> role.getName().equals(RoleEnum.ORGANIZER))) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(UtilsConfiguration.USER_IS_NOT_ORGANISER);
+        }
+
+        return switch (dataRequestType) {
+            case BY_TOPIC_TYPE ->
+                    ResponseEntity.status(HttpStatus.OK).body(dtosJsonResponserService.getLectureTopicTypeAttendance());
+            case BY_FULLNESS_PERCENTAGE ->
+                    ResponseEntity.status(HttpStatus.OK).body(dtosJsonResponserService.getLecturePercentageAttendance());
+        };
+    }
+
+    public ResponseEntity<String> getConferencePlan() {
+        return ResponseEntity.status(HttpStatus.OK).body(dtosJsonResponserService.getConferencePlan());
+    }
 }

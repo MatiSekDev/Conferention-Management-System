@@ -1,6 +1,7 @@
 package com.sii.conferention.management.system.controllers;
 
 import com.sii.conferention.management.system.configurations.UtilsConfiguration;
+import com.sii.conferention.management.system.dtos.OrganiserDataRequestDto;
 import com.sii.conferention.management.system.dtos.UserDataDto;
 import com.sii.conferention.management.system.dtos.UserUpdateDataDto;
 import com.sii.conferention.management.system.enums.RoleEnum;
@@ -27,23 +28,18 @@ public class UserController {
         return userService.registerNewUser(newUserData);
     }
 
-    @GetMapping("/admin/get/all")
-    public ResponseEntity<String> getAllUserDataForAdmin(@RequestBody UserDataDto adminUserData) {
-        return userService.getAllUserDataForAdmin(adminUserData);
-    }
-
     @PutMapping("/old/update")
     public ResponseEntity<String> updateUserEmail(@RequestBody UserUpdateDataDto userDataDto) {
         return userService.updateUserEmail(userDataDto);
     }
 
-    @PostMapping("/lectures/{lectureId}/cancel")
-    public ResponseEntity<String> cancelChosenReservation(@RequestBody UserDataDto userDataDto, @PathVariable Long lectureId){
-        return userService.cancelUserPartakeInLecture(userDataDto, lectureId);
+    @GetMapping("/admin/get/all")
+    public ResponseEntity<String> getAllUserDataForAdmin(@RequestBody UserDataDto adminUserData) {
+        return userService.getAllUserDataForAdmin(adminUserData);
     }
 
-    @GetMapping("/lectures/joined")
-    public ResponseEntity<String> showJoinedLectures(@RequestBody UserDataDto userLogin) {
-        return lectureService.showJoinedLectures(userLogin.getUsername());
+    @GetMapping("/organiser/data")
+    public ResponseEntity<String> getStatisticDataForOrganiser(@RequestBody OrganiserDataRequestDto organiserDataRequestDto) {
+        return lectureService.getStatisticDataForOrganiser(organiserDataRequestDto.getUserDataDto(), organiserDataRequestDto.getDataRequestType());
     }
 }

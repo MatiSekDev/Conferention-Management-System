@@ -10,10 +10,9 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ConferencePlanDto {
+public class LecturePercentageAttendanceDto {
     private long conferenceIdentifier;
-    private int currentParticipantsNumber;
-    private int maxNumberOfParticipants;
+    private int percentageAttendance;
     private Date endTime;
     private Date startTime;
     private TopicTypeEnum lectureTopicType;

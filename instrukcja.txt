@@ -23,7 +23,7 @@ GET na url: http://127.0.0.1:8080/user/admin/get/all
 z ciałem:
 {
 "username":"admin",
-"email":"admin@admin.com",
+"email":"admin@admin.com"
 }
 
 pobranie zestawienia danych przez organizatora (2 różne zestawienia, 2 przykłady):
@@ -58,7 +58,7 @@ POST na url: http://127.0.0.1:8080/conference/lectures/2/cancel
 z ciałem:
 {
 "username":"admin",
-"email":"admin@admin.com",
+"email":"admin@admin.com"
 }
 
 pobranie danych odnośnie wykładów na które dany użytkownik się zapisał:
@@ -73,5 +73,5 @@ POST na url: http://127.0.0.1:8080/conference/lectures/join/2
 z ciałem:
 {
 "username":"admin",
-"email":"admin@admin.com",
+"email":"admin@admin.com"
 }

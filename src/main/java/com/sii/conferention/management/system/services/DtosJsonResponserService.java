@@ -26,17 +26,26 @@ public class DtosJsonResponserService {
 
     public String getLectureTopicTypeAttendance() {
         List<Object[]> lectureTopicTypeAttendanceListPreParsed = lectureRepository.countParticipantsByLectureTopicType();
-        Long totalCountOfAllParticipants = participantRepository.count();
+        long totalCountOfAllParticipants = participantRepository.count();
         List<LectureTopicTypeAttendanceDto> lectureTopicTypeAttendanceList = new LinkedList<>();
         for (Object[] row : lectureTopicTypeAttendanceListPreParsed) {
-            lectureTopicTypeAttendanceList.add(
-                       LectureTopicTypeAttendanceDto.builder()
-                                                    .lectureTopicType((TopicTypeEnum) row[0])
-                                                    .sumOfAttendeeOfTopicToTotalAttendeeInPercentage(
-                                                            (((Long) row[1]) * 100)
-                                                            / totalCountOfAllParticipants)
-                                                    .build()
-            );
+            if (totalCountOfAllParticipants == 0) {
+                lectureTopicTypeAttendanceList.add(
+                        LectureTopicTypeAttendanceDto.builder()
+                                .lectureTopicType((TopicTypeEnum) row[0])
+                                .sumOfAttendeeOfTopicToTotalAttendeeInPercentage(Integer.toUnsignedLong(0))
+                                .build()
+                );
+            } else {
+                lectureTopicTypeAttendanceList.add(
+                        LectureTopicTypeAttendanceDto.builder()
+                                .lectureTopicType((TopicTypeEnum) row[0])
+                                .sumOfAttendeeOfTopicToTotalAttendeeInPercentage(
+                                        (((Long) row[1]) * 100)
+                                                / totalCountOfAllParticipants)
+                                .build()
+                );
+            }
         }
         try {
             return new ObjectMapper().writeValueAsString(lectureTopicTypeAttendanceList);

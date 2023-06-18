@@ -15,12 +15,9 @@ public final class UtilsConfiguration {
     public static final String PARTICIPANT_ADD_FAILURE_CONFLICT_MESSAGE = "Failed to join lecture because of time conflict";
     public static final String USER_ADD_SUCCESS_MESSAGE = "User was added";
     public static final String USER_ALREADY_EXIST_MESSAGE = "This username is already binded to this email";
-
     public static final String USER_LOGIN_ALREADY_TAKEN = "Podany login jest już zajęty";
-
     public static final String USER_DOES_NOT_EXIST = "User does not exist";
     public static final String LECTURE_DOES_NOT_EXIST = "Lecture does not exist";
-
     public static final String LECTURE_JOINED_SUCCESS_MESSAGE = "You have joined the lecture";
     public static final String USER_IS_NOT_ADMIN = "Your level of permissions is not enough for that!";
     public static final String EMAIL_NOTIFICATION_MESSAGE = "You have joined the lecture!";
@@ -28,6 +25,7 @@ public final class UtilsConfiguration {
     public static final String PARTICiPANT_LECTURE_NOT_QUIT_MESSAGE = "User could not have successfully quit the lecture";
     public static final String PARTICiPANT_LECTURE_QUIT_MESSAGE = "User successfully quit the lecture";
     public static final String JSON_PARSING_EXCEPTION_MESSAGE_ENGLISH = "JSON processing error, please try again later!";
+    public static final String USER_IS_NOT_ORGANISER = "Your level of permissions is not enough for that!";
     public static final int MAX_NO_PARTICIPANT_CASE_NORMAL = 5;
     public static final int LECTURE_FIRST_START_HOUR = 10;
     public static final int LECTURE_SECOND_START_HOUR = 12;

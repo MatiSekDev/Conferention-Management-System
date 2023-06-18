@@ -10,5 +10,5 @@ import lombok.*;
 @AllArgsConstructor
 public class LectureTopicTypeAttendanceDto {
     private TopicTypeEnum lectureTopicType;
-    private Long sumOfAttendee;
+    private Long sumOfAttendeeOfTopicToTotalAttendeeInPercentage;
 }

@@ -6,14 +6,12 @@ import com.sii.conferention.management.system.configurations.UtilsConfiguration;
 import com.sii.conferention.management.system.dtos.ConferencePlanDto;
 import com.sii.conferention.management.system.dtos.LecturePercentageAttendanceDto;
 import com.sii.conferention.management.system.dtos.LectureTopicTypeAttendanceDto;
-import com.sii.conferention.management.system.entities.ParticipantEntity;
 import com.sii.conferention.management.system.enums.TopicTypeEnum;
 import com.sii.conferention.management.system.repositories.LectureRepository;
 import com.sii.conferention.management.system.repositories.ParticipantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -28,12 +26,15 @@ public class DtosJsonResponserService {
 
     public String getLectureTopicTypeAttendance() {
         List<Object[]> lectureTopicTypeAttendanceListPreParsed = lectureRepository.countParticipantsByLectureTopicType();
+        Long totalCountOfAllParticipants = participantRepository.count();
         List<LectureTopicTypeAttendanceDto> lectureTopicTypeAttendanceList = new LinkedList<>();
         for (Object[] row : lectureTopicTypeAttendanceListPreParsed) {
             lectureTopicTypeAttendanceList.add(
                        LectureTopicTypeAttendanceDto.builder()
                                                     .lectureTopicType((TopicTypeEnum) row[0])
-                                                    .sumOfAttendee((Long) row[1])
+                                                    .sumOfAttendeeOfTopicToTotalAttendeeInPercentage(
+                                                            (((Long) row[1]) * 100)
+                                                            / totalCountOfAllParticipants)
                                                     .build()
             );
         }
